@@ -3,10 +3,18 @@ import dotenv from "dotenv";
 import connectDB from "./db/db.js";
 
 dotenv.config({
-  path: "./env",
+	path: "./env",
 });
 
-connectDB();
+connectDB()
+	.then(() => {
+		app.listen(process.env.PORT || 8000, () => {
+			console.log(`App is listening on server : ${process.env.PORT}`);
+		});
+	})
+	.catch((err) => {
+		console.log("MongoDB connection FAILED!!! ", err);
+	});
 
 //import { DB_NAME } from "./constants";
 
