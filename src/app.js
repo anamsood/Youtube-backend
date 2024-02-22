@@ -16,4 +16,10 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" })); //url apne aap s
 app.use(express.static("public")); //for images ,fevicon to be stored in 'public'
 app.use(cookieParser());
 
-export default { app };
+//routes
+import userRouter from "./routes/user.routes.js";
+
+//routes declaration
+app.use("/api/v1/users", userRouter);
+
+export { app };
