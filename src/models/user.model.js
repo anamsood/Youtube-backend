@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
 			lowercase: true,
 			trim: true,
 		},
-		fullname: {
+		fullName: {
 			type: String,
 			required: true,
 			index: true,
@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
 	if (this.isModified("password")) {
 		// only when the password field is accessed or modified encryption will take place
-		this.password = bcrypt.hash(this.password, 10);
+		this.password = await bcrypt.hash(this.password, 10);
 		next();
 	}
 	return next();
@@ -71,7 +71,7 @@ userSchema.methods.generateAccessToken = function () {
 			_id: this._id,
 			email: this.email,
 			username: this.username,
-			fullname: this.fullname,
+			fullName: this.fullName,
 		},
 		process.env.ACCESS_TOKEN_SECRET,
 		{
