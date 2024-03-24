@@ -6,7 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
 	try {
-		const user = User.findById(userId);
+		const user = await User.findById(userId);
 		const accessToken = user.generateAccessToken();
 		const refreshToken = user.generateRefreshToken();
 
@@ -96,8 +96,9 @@ const loginUser = asyncHandler(async (req, res) => {
 	//send cookie
 
 	const { email, username, password } = req.body;
+	console.log(email);
 
-	if (username === "" || password === null) {
+	if (username === "" && password === null) {
 		throw new ApiError(400, "email and password is required");
 	}
 
